@@ -37,7 +37,7 @@ const SidebarContent = () => {
       </ComposeButton>
       <List>
         {SIDEBAR_DATA.map((item) => (
-          <ListItem>
+          <ListItem key={item.title}>
             <item.icon fontSize="small" />
             {item.title}
           </ListItem>

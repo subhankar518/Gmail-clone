@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### SMTP SERVER INFO
+
+Username: paidcoursessde@gmail.com
+
+password: 2ACAF7CB0949397A5951650B115B79914266
+
+Server: smtp.elasticemail.com
+
+Port: 2525
