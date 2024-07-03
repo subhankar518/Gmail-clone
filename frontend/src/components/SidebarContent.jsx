@@ -2,6 +2,7 @@ import { Box, Button, styled, List, ListItem } from "@mui/material";
 import { CreateOutlined } from "@mui/icons-material";
 import { SIDEBAR_DATA } from "../config/Sidebar.config";
 import ComposeMail from "./ComposeMail";
+import { useState } from "react";
 
 const ComposeButton = styled(Button)({
   background: "#c2e7ff",
@@ -26,9 +27,11 @@ const Container = styled(Box)({
 });
 
 const SidebarContent = () => {
+  const [openComposeMail, setOpenComposeMail] = useState(false);
+
   return (
     <Container>
-      <ComposeButton>
+      <ComposeButton onClick={() => setOpenComposeMail(!openComposeMail)}>
         <CreateOutlined />
         Compose
       </ComposeButton>
@@ -40,7 +43,12 @@ const SidebarContent = () => {
           </ListItem>
         ))}
       </List>
-      <ComposeMail />
+      {openComposeMail ? (
+        <ComposeMail
+          openComposeMail={openComposeMail}
+          setOpenComposeMail={setOpenComposeMail}
+        />
+      ) : null}
     </Container>
   );
 };

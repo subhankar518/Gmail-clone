@@ -5,8 +5,9 @@ import {
   styled,
   InputBase,
   TextField,
+  Button,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Close, DeleteOutlined } from "@mui/icons-material";
 
 const dailogStyle = {
   height: "90%",
@@ -39,14 +40,39 @@ const RecipientsWrapper = styled(Box)({
   },
 });
 
+const Footer = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "10px 15px",
+});
+
+const SendButton = styled(Button)({
+  background: "#0B57D0",
+  color: "#fff",
+  fontWeight: 500,
+  textTransform: "none",
+  borderRadius: 18,
+  width: "100px",
+});
+
 // Typography is p tag replacement
 
-const ComposeMail = () => {
+const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
+  const closeCompposeMail = (e) => {
+    e.preventDefault();
+
+    setOpenComposeMail(!openComposeMail);
+  };
+
+  const sendMail = () => {
+    setOpenComposeMail(!openComposeMail);
+  };
+
   return (
-    <Dialog open={true} PaperProps={{ sx: dailogStyle }}>
+    <Dialog open={openComposeMail} PaperProps={{ sx: dailogStyle }}>
       <Header>
         <Typography>New Message</Typography>
-        <Close fontSize="small" />
+        <Close fontSize="small" onClick={(e) => closeCompposeMail(e)} />
       </Header>
       <RecipientsWrapper>
         <InputBase placeholder="Recipients" />
@@ -54,13 +80,17 @@ const ComposeMail = () => {
       </RecipientsWrapper>
       <TextField
         multiline
-        row={20}
+        rows={20}
         sx={{
           " & .MuiOutlinedInput-notchedOutline": {
             border: "none",
           },
         }}
       />
+      <Footer>
+        <SendButton onClick={sendMail}>Send</SendButton>
+        <DeleteOutlined onClick={() => setOpenComposeMail(!openComposeMail)} />
+      </Footer>
     </Dialog>
   );
 };
