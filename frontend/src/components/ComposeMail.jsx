@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import { Close, DeleteOutlined } from "@mui/icons-material";
 import { useState } from "react";
+import useApi from "../customHooks/useApi";
+import { API_ENDPOINTS } from "../services/api.endpoints";
 
 const dailogStyle = {
   height: "90%",
@@ -60,6 +62,7 @@ const SendButton = styled(Button)({
 
 const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
   const [emailData, setEmailData] = useState({});
+  const sendEmailService = useApi(API_ENDPOINTS.saveSentEmail);
 
   const closeCompposeMail = (e) => {
     e.preventDefault();
@@ -82,13 +85,33 @@ const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
         Password: process.env.REACT_APP_SERVER_PASSWORD,
         Port: process.env.REACT_APP_SERVER_PORT,
 
-        To: emailData.to,
-        From: "paidcoursessde@gmail.com", // need to create dynamic
-        Subject: emailData.subject,
-        Body: emailData.body,
+        To: emailData?.to,
+        From: "subhankarmanna518@gmail.com", // need to create dynamic
+        Subject: emailData?.subject,
+        Body: emailData?.body,
       }).then((message) => console.log(message));
     }
+
+    const payload = {
+      to: emailData?.to,
+      from: "subhankarmanna518@gmail.com", // need to create dynamic
+      subject: emailData?.subject,
+      body: emailData?.body,
+      date: new Date(),
+      attachment: "",
+      sender_name: "Subhankar Manna",
+      starred: false,
+      type: "sent",
+    };
+
+    sendEmailService.call(payload);
+
+    // if (!sendEmailService.error) {
+    //   setOpenComposeMail(!openComposeMail);
+    //   setEmailData({});
+    // }
     setOpenComposeMail(!openComposeMail);
+    setEmailData({});
   };
 
   return (

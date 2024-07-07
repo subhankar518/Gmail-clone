@@ -71,9 +71,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### SMTP SERVER INFO
 
-Username: paidcoursessde@gmail.com
+Username:
 
-password: 2ACAF7CB0949397A5951650B115B79914266
+password:
 
 Server: smtp.elasticemail.com
 
