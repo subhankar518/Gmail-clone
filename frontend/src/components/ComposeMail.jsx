@@ -8,6 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { Close, DeleteOutlined } from "@mui/icons-material";
+import { useState } from "react";
 
 const dailogStyle = {
   height: "90%",
@@ -58,10 +59,17 @@ const SendButton = styled(Button)({
 // Typography is p tag replacement
 
 const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
+  const [emailData, setEmailData] = useState({});
+
   const closeCompposeMail = (e) => {
     e.preventDefault();
 
     setOpenComposeMail(!openComposeMail);
+  };
+
+  const onValueChange = (e) => {
+    setEmailData({ ...emailData, [e.target.name]: e.target.value });
+    // console.log(emailData);
   };
 
   const sendMail = async (e) => {
@@ -74,10 +82,10 @@ const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
         Password: process.env.REACT_APP_SERVER_PASSWORD,
         Port: process.env.REACT_APP_SERVER_PORT,
 
-        To: "paidcoursessde@gmail.com", // need to create dynamic
+        To: emailData.to,
         From: "paidcoursessde@gmail.com", // need to create dynamic
-        Subject: "This is a 3nd dummy email subject",
-        Body: "This is a 3nd dummy email text",
+        Subject: emailData.subject,
+        Body: emailData.body,
       }).then((message) => console.log(message));
     }
     setOpenComposeMail(!openComposeMail);
@@ -90,8 +98,16 @@ const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
         <Close fontSize="small" onClick={(e) => closeCompposeMail(e)} />
       </Header>
       <RecipientsWrapper>
-        <InputBase placeholder="Recipients" />
-        <InputBase placeholder="Subject" />
+        <InputBase
+          placeholder="Recipients"
+          name="to"
+          onChange={(e) => onValueChange(e)}
+        />
+        <InputBase
+          placeholder="Subject"
+          name="subject"
+          onChange={(e) => onValueChange(e)}
+        />
       </RecipientsWrapper>
       <TextField
         multiline
@@ -101,6 +117,8 @@ const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
             border: "none",
           },
         }}
+        name="body"
+        onChange={(e) => onValueChange(e)}
       />
       <Footer>
         <SendButton onClick={(e) => sendMail(e)}>Send</SendButton>
