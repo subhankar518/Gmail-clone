@@ -64,7 +64,22 @@ const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
     setOpenComposeMail(!openComposeMail);
   };
 
-  const sendMail = () => {
+  const sendMail = async (e) => {
+    e.preventDefault();
+
+    if (window.Email) {
+      window.Email.send({
+        Host: process.env.REACT_APP_SERVER_HOST,
+        Username: process.env.REACT_APP_SERVER_USERNAME,
+        Password: process.env.REACT_APP_SERVER_PASSWORD,
+        Port: process.env.REACT_APP_SERVER_PORT,
+
+        To: "paidcoursessde@gmail.com", // need to create dynamic
+        From: "paidcoursessde@gmail.com", // need to create dynamic
+        Subject: "This is a 3nd dummy email subject",
+        Body: "This is a 3nd dummy email text",
+      }).then((message) => console.log(message));
+    }
     setOpenComposeMail(!openComposeMail);
   };
 
@@ -88,7 +103,7 @@ const ComposeMail = ({ openComposeMail, setOpenComposeMail }) => {
         }}
       />
       <Footer>
-        <SendButton onClick={sendMail}>Send</SendButton>
+        <SendButton onClick={(e) => sendMail(e)}>Send</SendButton>
         <DeleteOutlined onClick={() => setOpenComposeMail(!openComposeMail)} />
       </Footer>
     </Dialog>
